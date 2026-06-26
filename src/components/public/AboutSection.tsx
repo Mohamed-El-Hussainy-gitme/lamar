@@ -13,7 +13,6 @@ export default async function AboutSection({ lang }: { lang: Lang }) {
   const aboutText = await getContent('about_text', fallback)
   const paragraphs = aboutText.split('\n\n').filter(Boolean)
 
-  return (
     <section id="about" style={{ padding: '9rem 3.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center', background: 'var(--bg)' }}>
       {/* Left text */}
       <div>
@@ -21,18 +20,18 @@ export default async function AboutSection({ lang }: { lang: Lang }) {
           <span style={{ display: 'block', width: '1.5rem', height: 1, background: 'var(--teal2)', flexShrink: 0 }} />
           {tr.tag}
         </div>
-        <h2 className="rv d1" style={{ fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: 'clamp(1.9rem,3vw,2.8rem)', lineHeight: 1.06, letterSpacing: '-0.01em', color: 'var(--white)', marginBottom: '1.75rem' }}>
+        <h2 className="rv d1" style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: 'clamp(2rem,3vw,3rem)', lineHeight: 1.1, letterSpacing: '0.01em', color: 'var(--white)', marginBottom: '1.75rem' }}>
           {tr.heading}<br />{tr.headingPre} <span style={{ color: 'var(--teal2)' }}>{tr.headingTeal}</span>
         </h2>
         {paragraphs.map((p, i) => (
-          <p key={i} className="rv d2" style={{ fontSize: '0.95rem', lineHeight: 1.82, color: 'var(--white2)', fontWeight: 300, marginBottom: '1rem' }}>
+          <p key={i} className="rv d2" style={{ fontSize: '1.05rem', lineHeight: 1.8, color: 'var(--white2)', fontWeight: 300, marginBottom: '1rem' }}>
             {p}
           </p>
         ))}
-        <div className="rv d3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.7rem', marginTop: '2rem' }}>
+        <div className="rv d3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '2.5rem' }}>
           {tr.quals.map((q) => (
-            <div key={q} className="qual-pill" style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', fontSize: '0.85rem', color: 'var(--white2)', padding: '0.8rem 1rem', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 3, transition: 'border-color 0.2s, color 0.2s' }}>
-              <span style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--teal2)', flexShrink: 0 }} />
+            <div key={q} className="qual-pill" style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', fontSize: '0.9rem', color: 'var(--white)', padding: '0.8rem 0' }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--teal2)', flexShrink: 0 }} />
               {q}
             </div>
           ))}
@@ -45,27 +44,27 @@ export default async function AboutSection({ lang }: { lang: Lang }) {
           style={{
             width: '100%',
             aspectRatio: '4/5',
-            backgroundColor: '#3A5A50',
+            backgroundColor: 'var(--bg2)',
             backgroundImage: `url('${P}/13067890/pexels-photo-13067890.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            borderRadius: 3,
+            borderRadius: 24,
             overflow: 'hidden',
             position: 'relative',
           }}
         >
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 60%, rgba(12,12,10,0.5) 100%)' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 60%, rgba(26,28,32,0.6) 100%)' }} />
         </div>
-        <div style={{ position: 'absolute', bottom: 0, left: '-1rem', background: 'var(--teal)', padding: '1.75rem 1.5rem', borderRadius: 8, textAlign: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}>
-          <span style={{ fontFamily: 'var(--font-archivo)', fontWeight: 900, fontSize: '2.6rem', color: 'var(--teal2)', lineHeight: 1, display: 'block' }}>5+</span>
-          <span style={{ fontSize: '0.6rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)', marginTop: '0.35rem', display: 'block', lineHeight: 1.6 }}>
+        <div style={{ position: 'absolute', bottom: 0, left: '-1.5rem', background: 'var(--teal)', padding: '2rem 1.75rem', borderRadius: 16, textAlign: 'center', boxShadow: '0 10px 40px rgba(0,0,0,0.08)' }}>
+          <span style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '3rem', color: 'var(--teal2)', lineHeight: 1, display: 'block' }}>5+</span>
+          <span style={{ fontFamily: 'var(--font-outfit)', fontSize: '0.65rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)', marginTop: '0.5rem', display: 'block', lineHeight: 1.6 }}>
             {tr.yearsLabel[0]}<br />{tr.yearsLabel[1]}
           </span>
         </div>
         {/* Float card */}
-        <div style={{ position: 'absolute', top: '2rem', right: 0, background: 'var(--bg3)', border: '1px solid var(--border)', padding: '1.25rem 1.5rem', borderRadius: 3 }}>
-          <span style={{ fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: '1.8rem', color: 'var(--white)', display: 'block', lineHeight: 1 }}>200+</span>
-          <span style={{ fontSize: '0.6rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--white2)', marginTop: '0.3rem', display: 'block' }}>
+        <div style={{ position: 'absolute', top: '2.5rem', right: '-1.5rem', background: 'var(--bg3)', border: '1px solid var(--border)', padding: '1.5rem 1.75rem', borderRadius: 16, boxShadow: '0 10px 30px rgba(0,0,0,0.03)' }}>
+          <span style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '2rem', color: 'var(--white)', display: 'block', lineHeight: 1 }}>200+</span>
+          <span style={{ fontFamily: 'var(--font-outfit)', fontSize: '0.65rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--white2)', marginTop: '0.5rem', display: 'block' }}>
             {tr.projectsLabel[0]}<br />{tr.projectsLabel[1]}
           </span>
         </div>

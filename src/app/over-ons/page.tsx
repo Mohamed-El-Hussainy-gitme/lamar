@@ -15,21 +15,23 @@ export const metadata = {
 }
 
 const IMG = 'https://images.pexels.com/photos/5493654/pexels-photo-5493654.jpeg?auto=compress&cs=tinysrgb&w=800&h=1150&fit=crop'
-const SHADES = ['#2ABFA8', '#23A18F', '#1D8576', '#166B5E']
 
 type Principle = { title: string; text: string }
 
-function NestedPrinciple({ items, idx }: { items: Principle[]; idx: number }) {
-  const it = items[idx]
-  const hasChild = idx < items.length - 1
-  const isOuter = idx === 0
+function PrincipleList({ items }: { items: Principle[] }) {
   return (
-    <div style={{ background: SHADES[idx], borderRadius: isOuter ? 26 : 20, padding: '1.3rem 0.9rem 0.9rem', boxShadow: isOuter ? '0 24px 60px rgba(26,107,96,0.28)' : 'none' }}>
-      <div style={{ padding: '0 0.6rem', marginBottom: hasChild ? '0.95rem' : '0.5rem' }}>
-        <div style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.05rem', color: '#FFFFFF', marginBottom: 5 }}>{it.title}</div>
-        <div style={{ fontSize: '0.9rem', lineHeight: 1.55, color: 'rgba(255,255,255,0.85)', fontWeight: 300 }}>{it.text}</div>
-      </div>
-      {hasChild && <NestedPrinciple items={items} idx={idx + 1} />}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      {items.map((it, idx) => (
+        <div key={idx} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 16, padding: '1.75rem', display: 'flex', gap: '1.25rem', alignItems: 'flex-start' }}>
+          <span style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.4rem', color: 'var(--teal2)', flexShrink: 0, width: 32 }}>
+            0{idx + 1}
+          </span>
+          <div>
+            <div style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.1rem', color: 'var(--white)', marginBottom: '0.4rem' }}>{it.title}</div>
+            <div style={{ fontSize: '0.95rem', lineHeight: 1.65, color: 'var(--white2)', fontWeight: 300 }}>{it.text}</div>
+          </div>
+        </div>
+      ))}
     </div>
   )
 }
@@ -45,19 +47,19 @@ export default async function OverOnsPage() {
       <Navbar lang={lang} />
       <main style={{ paddingTop: 75 }}>
         <section id="over-intro" style={{ background: 'var(--bg)', padding: '6rem 3.5rem' }}>
-          <div className="over-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3.5rem', maxWidth: 1200, margin: '0 auto', alignItems: 'center' }}>
+          <div className="over-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', maxWidth: 1200, margin: '0 auto', alignItems: 'center' }}>
             <div className="rv">
-              <h1 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: 'clamp(2.2rem,4vw,3.4rem)', lineHeight: 1.05, letterSpacing: '-0.01em', color: 'var(--white)', marginBottom: '1.25rem' }}>
+              <h1 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: 'clamp(2.4rem,4vw,3.6rem)', lineHeight: 1.1, letterSpacing: '0.01em', color: 'var(--white)', marginBottom: '1.5rem' }}>
                 {tr.headingA} <span style={{ color: 'var(--teal2)' }}>{tr.headingAccent}</span> {tr.headingB}
               </h1>
               {paragraphs.map((p, i) => (
-                <p key={i} style={{ fontSize: '1rem', lineHeight: 1.8, color: 'var(--white2)', fontWeight: 300, marginBottom: '1rem', maxWidth: 520 }}>{p}</p>
+                <p key={i} style={{ fontSize: '1.05rem', lineHeight: 1.8, color: 'var(--white2)', fontWeight: 300, marginBottom: '1rem', maxWidth: 540 }}>{p}</p>
               ))}
-              <div style={{ marginTop: '2rem' }}>
-                <NestedPrinciple items={tr.principles} idx={0} />
+              <div style={{ marginTop: '2.5rem' }}>
+                <PrincipleList items={tr.principles} />
               </div>
             </div>
-            <div className="over-img rv" style={{ width: '100%', height: 680, borderRadius: 28, overflow: 'hidden', boxShadow: '0 30px 60px rgba(20,24,29,0.18)', backgroundImage: `url('${IMG}')`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+            <div className="over-img rv" style={{ width: '100%', height: 740, borderRadius: 28, overflow: 'hidden', border: '1px solid var(--border)', backgroundImage: `url('${IMG}')`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
           </div>
         </section>
 

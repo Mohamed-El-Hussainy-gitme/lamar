@@ -33,8 +33,8 @@ export default async function WerkwijzePage() {
         />
         {/* VISIE banner — change the wording to whatever slogan you prefer */}
         <section style={{ background: 'var(--bg)', padding: '1rem 3.5rem 5rem' }}>
-          <div className="rv ww-banner" style={{ maxWidth: 1200, margin: '0 auto', borderRadius: 28, padding: '4rem 2rem', textAlign: 'center', background: 'linear-gradient(120deg, var(--teal2) 0%, var(--teal) 100%)', boxShadow: '0 30px 70px rgba(26,107,96,0.3)' }}>
-            <h2 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 900, fontSize: 'clamp(2rem,5vw,4rem)', letterSpacing: '0.02em', color: '#FFFFFF', margin: 0 }}>
+          <div className="rv ww-banner" style={{ maxWidth: 1200, margin: '0 auto', borderRadius: 28, padding: '5rem 2rem', textAlign: 'center', background: 'var(--teal)', border: '1px solid var(--border)' }}>
+            <h2 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: 'clamp(2rem,5vw,3.5rem)', letterSpacing: '0.01em', color: 'var(--teal2)', margin: 0 }}>
               {banner}
             </h2>
           </div>

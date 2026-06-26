@@ -44,7 +44,7 @@ export default async function ProjectsPage() {
             <span style={{ display: 'block', width: '1.5rem', height: 1, background: 'var(--teal2)', flexShrink: 0 }} />
             {tr.tag}
           </div>
-          <h1 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: 'clamp(2rem,4vw,3.5rem)', lineHeight: 1.06, letterSpacing: '-0.01em', color: 'var(--white)' }}>
+          <h1 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: 'clamp(2.4rem,4vw,3.6rem)', lineHeight: 1.1, letterSpacing: '0.01em', color: 'var(--white)' }}>
             {tr.heading} <span style={{ color: 'var(--teal2)' }}>{tr.headingTeal}</span>
           </h1>
         </section>
@@ -78,8 +78,12 @@ export default async function ProjectsPage() {
                           className="project-cover-img"
                         />
                       ) : (
-                        <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, var(--teal) 0%, var(--bg2) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          <span style={{ color: 'rgba(242,238,230,0.3)', fontSize: '2rem' }}>📷</span>
+                        <div style={{ width: '100%', height: '100%', background: 'var(--bg2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--white2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.5 }}>
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                          </svg>
                         </div>
                       )}
                       {count > 0 && (
@@ -89,8 +93,8 @@ export default async function ProjectsPage() {
                       )}
                     </div>
                     {/* Info */}
-                    <div style={{ padding: '1.5rem' }}>
-                      <h2 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.1rem', color: 'var(--white)', marginBottom: '0.5rem', letterSpacing: '-0.01em' }}>
+                    <div style={{ padding: '1.75rem' }}>
+                      <h2 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.25rem', color: 'var(--white)', marginBottom: '0.6rem', letterSpacing: '0.01em' }}>
                         {project.title}
                       </h2>
                       {project.description && (

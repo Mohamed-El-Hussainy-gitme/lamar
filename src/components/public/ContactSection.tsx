@@ -34,16 +34,16 @@ export default async function ContactSection({ lang, quote }: { lang: Lang; quot
       </div>
 
       {/* Teal card panel */}
-      <div className="rv contact-panel" style={{ maxWidth: 1200, margin: '0 auto', borderRadius: 28, padding: '3.5rem 3rem', background: 'linear-gradient(120deg, var(--teal2) 0%, var(--teal) 100%)', boxShadow: '0 30px 70px rgba(26,107,96,0.3)' }}>
-        <h2 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: 'clamp(1.9rem,3.4vw,3rem)', lineHeight: 1.08, color: '#FFFFFF', marginBottom: '0.75rem' }}>{tx('home_contact_heading')}</h2>
-        <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.9)', fontWeight: 300, marginBottom: '2.5rem', maxWidth: 560 }}>{tx('home_contact_sub')}</p>
-        <div className="contact-cards" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.25rem' }}>
+      <div className="rv contact-panel" style={{ maxWidth: 1200, margin: '0 auto', borderRadius: 28, padding: '4.5rem 4rem', background: 'var(--teal)', border: '1px solid var(--border)' }}>
+        <h2 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: 'clamp(2rem,3.4vw,3.2rem)', lineHeight: 1.1, color: '#FFFFFF', marginBottom: '1.25rem' }}>{tx('home_contact_heading')}</h2>
+        <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,0.7)', fontWeight: 300, marginBottom: '3.5rem', maxWidth: 560, lineHeight: 1.7 }}>{tx('home_contact_sub')}</p>
+        <div className="contact-cards" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '2rem' }}>
           {tr.cards.map((card, i) => (
-            <div key={i} style={{ background: '#FFFFFF', borderRadius: 18, padding: '2rem 1.5rem', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <span style={{ marginBottom: '0.9rem' }}><CIcon name={card.icon} /></span>
-              <div style={{ fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: '1.05rem', color: 'var(--white)', marginBottom: '0.5rem' }}>{tx(`home_contact_card${i + 1}_title`)}</div>
-              <div style={{ fontSize: '0.85rem', lineHeight: 1.5, color: 'var(--white2)', fontWeight: 300, marginBottom: '1.5rem', flex: 1 }}>{tx(`home_contact_card${i + 1}_text`)}</div>
-              <a href={hrefs[i]} style={{ background: 'var(--teal)', color: '#FFFFFF', padding: '0.55rem 1.4rem', borderRadius: 999, fontSize: '0.78rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-outfit)' }}>{tx(`home_contact_card${i + 1}_btn`)}</a>
+            <div key={i} style={{ background: 'var(--bg2)', borderRadius: 20, padding: '2.5rem 1.75rem', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid var(--border)' }}>
+              <span style={{ marginBottom: '1.25rem' }}><CIcon name={card.icon} /></span>
+              <div style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.15rem', color: 'var(--white)', marginBottom: '0.75rem' }}>{tx(`home_contact_card${i + 1}_title`)}</div>
+              <div style={{ fontSize: '0.95rem', lineHeight: 1.6, color: 'var(--white2)', fontWeight: 300, marginBottom: '2rem', flex: 1 }}>{tx(`home_contact_card${i + 1}_text`)}</div>
+              <a href={hrefs[i]} style={{ background: 'var(--teal)', color: '#FFFFFF', padding: '0.7rem 1.6rem', borderRadius: 999, fontSize: '0.8rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-outfit)' }}>{tx(`home_contact_card${i + 1}_btn`)}</a>
             </div>
           ))}
         </div>

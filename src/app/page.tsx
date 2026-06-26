@@ -3,6 +3,7 @@ import HeroSection from '@/components/public/HeroSection';
 import ReviewBadges from '@/components/public/ReviewBadges';
 import AboutSection from '@/components/public/AboutSection';
 import ServicesSection from '@/components/public/ServicesSection';
+import ProjectsSlider from '@/components/public/ProjectsSlider';
 import VisionSection from '@/components/public/VisionSection';
 import ProcessSection from '@/components/public/ProcessSection';
 import BenefitsSection from '@/components/public/BenefitsSection';
@@ -31,6 +32,7 @@ export default async function Home() {
         <ReviewBadges />
         <AboutSection lang={lang} />
         <ServicesSection lang={lang} />
+        <ProjectsSlider lang={lang} />
         <VisionSection lang={lang} />
         <ProcessSection lang={lang} />
         <BenefitsSection lang={lang} />

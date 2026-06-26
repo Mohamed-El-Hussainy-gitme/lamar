@@ -13,23 +13,20 @@ export default async function ProcessSection({ lang }: { lang: Lang }) {
   const tr = t[lang].werkwijze
   const tx = await getSiteText()
 
-  return (
     <section id="process" style={{ background: 'var(--bg)', padding: '7rem 3.5rem' }}>
-      <style>{`.proc-card{transition:transform .2s, box-shadow .2s}.proc-card:hover{transform:translateY(-4px);box-shadow:0 20px 44px rgba(20,24,29,0.12)}`}</style>
-
-      <div className="rv" style={{ textAlign: 'center', maxWidth: 680, margin: '0 auto 3rem' }}>
-        <h2 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: 'clamp(2rem,3.6vw,3.1rem)', lineHeight: 1.06, letterSpacing: '-0.01em', color: 'var(--white)', marginBottom: '1rem' }}>
+      <div className="rv" style={{ textAlign: 'center', maxWidth: 680, margin: '0 auto 4rem' }}>
+        <h2 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: 'clamp(2rem,3.6vw,3.1rem)', lineHeight: 1.06, letterSpacing: '0.01em', color: 'var(--white)', marginBottom: '1.5rem' }}>
           {tx('home_process_heading_a')}<br />{tx('home_process_heading_b')} <span style={{ color: 'var(--teal2)' }}>{tx('home_process_heading_accent')}</span>
         </h2>
-        <p style={{ fontSize: '1rem', lineHeight: 1.7, color: 'var(--white2)', fontWeight: 300 }}>{tx('home_process_sub')}</p>
+        <p style={{ fontSize: '1.05rem', lineHeight: 1.7, color: 'var(--white2)', fontWeight: 300 }}>{tx('home_process_sub')}</p>
       </div>
 
-      <div className="proc-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', maxWidth: 760, margin: '0 auto' }}>
+      <div className="proc-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', maxWidth: 860, margin: '0 auto' }}>
         {tr.steps.map((s, i) => (
-          <div key={i} className={`proc-card rv${i > 1 ? ' d1' : ''}`} style={{ background: '#FFFFFF', border: '1px solid var(--border)', borderRadius: 18, padding: '2.25rem 1.5rem', boxShadow: '0 10px 30px rgba(20,24,29,0.06)', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.55rem' }}>
-            <span style={{ marginBottom: '0.4rem' }}><Icon name={s.icon} /></span>
-            <div style={{ fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: '1.05rem', color: 'var(--white)' }}>{s.step}</div>
-            <div style={{ fontSize: '0.9rem', color: 'var(--white2)', fontWeight: 300 }}>{tx(`home_process_step${i + 1}`)}</div>
+          <div key={i} className={`proc-card rv${i > 1 ? ' d1' : ''}`} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 20, padding: '3rem 2.5rem', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', transition: 'border-color 0.3s, transform 0.3s' }}>
+            <span style={{ marginBottom: '0.5rem', width: 56, height: 56, borderRadius: '50%', background: 'var(--bg3)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border)' }}><Icon name={s.icon} /></span>
+            <div style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.25rem', color: 'var(--white)' }}>{s.step}</div>
+            <div style={{ fontSize: '1rem', color: 'var(--white2)', fontWeight: 300, lineHeight: 1.6 }}>{tx(`home_process_step${i + 1}`)}</div>
           </div>
         ))}
       </div>
