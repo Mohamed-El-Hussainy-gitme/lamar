@@ -3,7 +3,7 @@ import { type Lang } from '@/lib/i18n'
 export default function VisionSection({ lang }: { lang: Lang }) {
   return (
     <section id="vision" style={{ padding: '8rem 3.5rem', background: 'var(--teal)', color: '#FFFFFF' }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '4rem', alignItems: 'center' }}>
+      <div className="vision-grid" style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '4rem', alignItems: 'center' }}>
         {/* Left Text */}
         <div className="rv">
           <div style={{ fontSize: '0.63rem', letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--teal2)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>

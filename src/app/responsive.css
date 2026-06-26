@@ -19,6 +19,8 @@ section, footer, nav {
   #services                        { padding: 5rem 1.5rem !important; }
   #services > div:last-child       { grid-template-columns: repeat(2, 1fr) !important; }
   #about                           { padding: 6rem 1.5rem !important; grid-template-columns: 1fr !important; gap: 3rem !important; }
+  #vision                          { padding: 6rem 1.5rem !important; }
+  #vision .vision-grid             { grid-template-columns: 1fr !important; gap: 3rem !important; }
   #process                         { padding: 5rem 1.5rem !important; }
   #benefits                        { padding: 5rem 1.5rem !important; }
   #benefits .ben-grid              { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
@@ -55,9 +57,11 @@ section, footer, nav {
   #services                        { padding: 4rem 1.25rem !important; }
   #services > div:last-child       { grid-template-columns: 1fr !important; }
 
-  /* About: 1-col, hide image/badges panel */
+  /* About & Vision: 1-col, hide image/badges panel */
   #about                           { padding: 4rem 1.25rem !important; gap: 2rem !important; }
   #about > div:last-child          { display: none !important; }
+  #vision                          { padding: 4rem 1.25rem !important; }
+  #vision .vision-grid             { grid-template-columns: 1fr !important; gap: 2rem !important; }
 
   /* Process: 1-col grid on mobile */
   #process                         { padding: 4rem 1.25rem !important; }
