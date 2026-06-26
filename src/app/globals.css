@@ -1,0 +1,98 @@
+@import "tailwindcss";
+@import "./responsive.css";
+
+:root {
+  --bg:      #FFFFFF;
+  --bg2:     #FAFAFA;
+  --bg3:     #FFFFFF;
+  --white:   #1A1C20;
+  --white2:  #5C626A;
+  --white3:  #9CA3AF;
+  --teal:    #1A1C20;
+  --teal2:   #D4AF37;
+  --border:  rgba(26,28,32,0.08);
+  --border2: rgba(26,28,32,0.14);
+}
+
+@theme inline {
+  --color-bg:      var(--bg);
+  --color-bg2:     var(--bg2);
+  --color-bg3:     var(--bg3);
+  --color-brand:   var(--white);
+  --color-muted:   var(--white2);
+  --color-teal:    var(--teal);
+  --color-teal2:   var(--teal2);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-outfit), sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+/* ── Reveal animations ─────────────────────────────── */
+.rv {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.rv.on {
+  opacity: 1;
+  transform: translateY(0);
+}
+.rvl {
+  opacity: 0;
+  transform: translateX(-28px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.rvl.on {
+  opacity: 1;
+  transform: translateX(0);
+}
+.rv.d1 { transition-delay: 0.12s; }
+.rv.d2 { transition-delay: 0.25s; }
+.rv.d3 { transition-delay: 0.38s; }
+.rv.d4 { transition-delay: 0.48s; }
+
+/* ── Hover effects for server components ──────────── */
+.btn-teal          { background: var(--teal2) !important; color: #000000 !important; transition: background 0.2s, color 0.2s !important; }
+.btn-teal:hover    { background: var(--teal) !important; color: #FFFFFF !important; }
+.btn-fill:hover    { background: var(--teal2) !important; color: #000000 !important; }
+.btn-line:hover    { border-color: var(--teal2) !important; color: var(--teal2) !important; }
+.btn-outline:hover { border-color: var(--teal2) !important; color: var(--teal2) !important; }
+.nav-link:hover    { color: var(--teal2) !important; }
+.nav-cta           { background: var(--teal2) !important; color: #000000 !important; transition: background 0.2s, color 0.2s !important; }
+.nav-cta:hover     { background: var(--teal) !important; color: #FFFFFF !important; }
+.svc-card:hover    { border-color: var(--teal2) !important; transform: translateY(-4px); }
+.qual-pill:hover   { border-color: var(--teal2) !important; color: var(--teal2) !important; }
+.view-all:hover    { color: var(--teal2) !important; border-bottom-color: var(--teal2) !important; }
+.footer-link:hover { color: var(--teal2) !important; }
+.tcard:hover       { border-color: var(--border2) !important; }
+.tcard.featured    { border-color: var(--teal2) !important; background: var(--bg) !important; }
+
+/* ── Ticker ────────────────────────────────────────── */
+@keyframes tick {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ticker-track {
+  animation: tick 30s linear infinite;
+}
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* ── Admin ─────────────────────────────────────────── */
+.move-btn:hover         { border-color: #2ABFA8 !important; color: #2ABFA8 !important; }
+.quick-action-card:hover { border-color: #2ABFA8 !important; }
+
+/* ── Projects public pages ─────────────────────────── */
+.project-card:hover { border-color: var(--teal2) !important; transform: translateY(-3px); }
+.project-card:hover .project-cover-img { transform: scale(1.04); }
+.gallery-thumb:hover { transform: translateY(-2px); }
+.gallery-thumb:hover .gallery-thumb-img { transform: scale(1.05); }
