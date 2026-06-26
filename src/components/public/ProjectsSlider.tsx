@@ -5,10 +5,15 @@ import { prisma } from '@/lib/prisma'
 export default async function ProjectsSlider({ lang }: { lang: Lang }) {
   const tr = t[lang].projectsPage
   
-  const projects = await prisma.project.findMany({
-    where: { published: true },
-    orderBy: { order: 'asc' },
-  })
+  let projects: any[] = []
+  try {
+    projects = await prisma.project.findMany({
+      where: { published: true },
+      orderBy: { order: 'asc' },
+    })
+  } catch (err) {
+    // Graceful fallback if DB is unreachable during build
+  }
 
   if (!projects || projects.length === 0) return null;
 
