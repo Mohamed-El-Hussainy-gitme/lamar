@@ -13,6 +13,7 @@ export default async function ProcessSection({ lang }: { lang: Lang }) {
   const tr = t[lang].werkwijze
   const tx = await getSiteText()
 
+  return (
     <section id="process" style={{ background: 'var(--bg)', padding: '7rem 3.5rem' }}>
       <div className="rv" style={{ textAlign: 'center', maxWidth: 680, margin: '0 auto 4rem' }}>
         <h2 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: 'clamp(2rem,3.6vw,3.1rem)', lineHeight: 1.06, letterSpacing: '0.01em', color: 'var(--white)', marginBottom: '1.5rem' }}>

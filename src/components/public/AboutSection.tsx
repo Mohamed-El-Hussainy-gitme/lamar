@@ -13,6 +13,7 @@ export default async function AboutSection({ lang }: { lang: Lang }) {
   const aboutText = await getContent('about_text', fallback)
   const paragraphs = aboutText.split('\n\n').filter(Boolean)
 
+  return (
     <section id="about" style={{ padding: '9rem 3.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center', background: 'var(--bg)' }}>
       {/* Left text */}
       <div>
