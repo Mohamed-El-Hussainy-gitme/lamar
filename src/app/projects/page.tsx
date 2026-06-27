@@ -3,11 +3,13 @@ import { t } from '@/lib/i18n'
 import Navbar from '@/components/public/Navbar'
 import Footer from '@/components/public/Footer'
 import Link from 'next/link'
+import PageHeader from '@/components/public/PageHeader'
+import { staticProjects } from '@/lib/staticProjects'
 
 export const revalidate = 3600
 
 export const metadata = {
-  title: 'Projecten',
+  title: 'Portfolio | LAMAR Stukadoor en Onderhoud',
   description: 'Een selectie van afgeronde stukadoors-, afwerkings- en renovatieprojecten van LAMAR door heel Nederland.',
   alternates: { canonical: '/projects' },
 }
@@ -16,67 +18,117 @@ export default async function ProjectsPage() {
   const lang = 'nl' as const
   const tr = t[lang].projectsPage
 
-  const projects = await prisma.project.findMany({
+  const dbProjects = await prisma.project.findMany({
     where: { published: true },
     orderBy: { order: 'asc' },
     include: {
-      images: {
-        orderBy: { order: 'asc' },
-        take: 1,
-      },
+      images: { orderBy: { order: 'asc' }, take: 1 },
       _count: { select: { images: true } },
     },
   }).catch(() => [])
 
+  // Use DB projects if available, otherwise fall back to static local images
+  const useStatic = dbProjects.length === 0
+
   return (
     <>
       <Navbar lang={lang} />
-      <main style={{ minHeight: '100vh', background: 'var(--bg)', paddingTop: 75 }}>
-        {/* Header */}
-        <section className="projects-header" style={{ padding: '6rem 3.5rem 4rem', background: 'var(--bg)' }}>
-          <Link
-            href="/"
-            style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--white2)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '3rem', fontFamily: 'var(--font-archivo)' }}
-          >
-            {tr.backToHome}
-          </Link>
-          <div style={{ fontSize: '0.63rem', letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--teal2)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            <span style={{ display: 'block', width: '1.5rem', height: 1, background: 'var(--teal2)', flexShrink: 0 }} />
-            {tr.tag}
+
+      <PageHeader
+        title="PORTFOLIO"
+        bgImage="/images/Sausklaar-Stucwerk-1.webp"
+        quote={{
+          text: "Aanrader! Geweldige kwaliteit stuc- en schilderwerk. Reageert snel, op alle vragen en is flexibel. Hele goede prijs-kwaliteit verhouding. Ik zou zeker terugkomen!",
+          author: "Maureen"
+        }}
+      />
+
+      <main style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+
+        {/* Tip bar */}
+        <section style={{ background: 'var(--bg2)', borderBottom: '1px solid var(--border)', padding: '1.25rem 1.5rem', textAlign: 'center' }}>
+          <div style={{ maxWidth: 900, margin: '0 auto' }}>
+            <p style={{ fontSize: '0.9rem', color: 'var(--white2)', fontFamily: 'var(--font-outfit)', margin: 0 }}>
+              <strong style={{ color: 'var(--white)' }}>Tip:</strong> Om de kwaliteit van de afbeelding te verhogen raden wij u aan om erop te klikken.
+            </p>
           </div>
-          <h1 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: 'clamp(2.4rem,4vw,3.6rem)', lineHeight: 1.1, letterSpacing: '0.01em', color: 'var(--white)' }}>
-            {tr.heading} <span style={{ color: 'var(--teal2)' }}>{tr.headingTeal}</span>
-          </h1>
+        </section>
+
+        {/* Section header */}
+        <section style={{ padding: '4rem 1.5rem 2rem' }}>
+          <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
+            <h2 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', color: 'var(--white)', marginBottom: '0.75rem' }}>
+              Projecten
+            </h2>
+            <div style={{ width: 60, height: 4, background: 'var(--teal2)', margin: '0 auto 1.5rem', borderRadius: 2 }} />
+            <p style={{ color: 'var(--white2)', fontSize: '1rem', lineHeight: 1.7, fontFamily: 'var(--font-outfit)' }}>
+              Op Google kunt u onze reviews terugvinden. Daar staan de werkzaamheden die wij in het verleden hebben verricht, samen met de referenties van onze opdrachtgevers.
+            </p>
+          </div>
         </section>
 
         {/* Grid */}
-        <section className="projects-grid" style={{ padding: '2rem 3.5rem 8rem', background: 'var(--bg)' }}>
-          {projects.length === 0 ? (
-            <p style={{ color: 'var(--white2)', fontSize: '0.95rem' }}>{tr.empty}</p>
+        <section style={{ padding: '1rem 1.5rem 6rem' }}>
+          {useStatic ? (
+            <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.5rem' }}>
+              {staticProjects.map((project) => (
+                <div
+                  key={project.id}
+                  style={{ borderRadius: 8, overflow: 'hidden', background: 'var(--bg2)', border: '1px solid var(--border)', transition: 'transform 0.25s, border-color 0.25s' }}
+                  className="project-card"
+                >
+                  {/* Multi-image strip: large left + 2 small right */}
+                  <div style={{ display: 'grid', gridTemplateColumns: project.images.length >= 2 ? '2fr 1fr' : '1fr', gap: 2, height: 220, overflow: 'hidden' }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={project.images[0]} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                    {project.images.length >= 2 && (
+                      <div style={{ display: 'grid', gridTemplateRows: '1fr 1fr', gap: 2 }}>
+                        {project.images[1] && (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={project.images[1]} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                        )}
+                        {project.images[2] && (
+                          <div style={{ position: 'relative', overflow: 'hidden' }}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={project.images[2]} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                            {project.images.length > 3 && (
+                              <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.1rem' }}>
+                                +{project.images.length - 3}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  {/* Info */}
+                  <div style={{ padding: '1.25rem 1.5rem' }}>
+                    <h3 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.1rem', color: 'var(--white)', marginBottom: '0.4rem' }}>
+                      {project.title}
+                    </h3>
+                    <p style={{ fontSize: '0.875rem', color: 'var(--white2)', lineHeight: 1.6, margin: 0 }}>
+                      {project.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '1.5rem' }}>
-              {projects.map((project) => {
+            <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.5rem' }}>
+              {dbProjects.map((project) => {
                 const cover = project.coverImageUrl ?? project.images[0]?.url ?? null
                 const count = project._count.images
                 return (
                   <Link
                     key={project.id}
                     href={`/projects/${project.slug}`}
-                    style={{ textDecoration: 'none', display: 'block', borderRadius: 4, overflow: 'hidden', background: 'var(--bg3)', border: '1px solid var(--border)', transition: 'border-color 0.2s, transform 0.2s' }}
+                    style={{ textDecoration: 'none', display: 'block', borderRadius: 8, overflow: 'hidden', background: 'var(--bg2)', border: '1px solid var(--border)', transition: 'border-color 0.2s, transform 0.2s' }}
                     className="project-card"
                   >
-                    {/* Cover image */}
-                    <div style={{ aspectRatio: '16/10', background: 'var(--bg2)', position: 'relative', overflow: 'hidden' }}>
+                    <div style={{ height: 220, background: 'var(--bg2)', position: 'relative', overflow: 'hidden' }}>
                       {cover ? (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={cover}
-                          alt={project.title}
-                          loading="lazy"
-                          decoding="async"
-                          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.5s ease' }}
-                          className="project-cover-img"
-                        />
+                        <img src={cover} alt={project.title} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.5s ease' }} className="project-cover-img" />
                       ) : (
                         <div style={{ width: '100%', height: '100%', background: 'var(--bg2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--white2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.5 }}>
@@ -87,22 +139,21 @@ export default async function ProjectsPage() {
                         </div>
                       )}
                       {count > 0 && (
-                        <div style={{ position: 'absolute', bottom: 12, right: 12, background: 'rgba(12,12,10,0.75)', backdropFilter: 'blur(8px)', padding: '0.25rem 0.65rem', borderRadius: 3, fontSize: '0.65rem', letterSpacing: '0.1em', color: 'var(--white2)', fontFamily: 'var(--font-archivo)' }}>
-                          {count} {tr.images}
+                        <div style={{ position: 'absolute', bottom: 12, right: 12, background: 'rgba(12,12,10,0.75)', backdropFilter: 'blur(8px)', padding: '0.25rem 0.65rem', borderRadius: 3, fontSize: '0.65rem', letterSpacing: '0.1em', color: '#fff', fontFamily: 'var(--font-archivo)' }}>
+                          {count} foto&apos;s
                         </div>
                       )}
                     </div>
-                    {/* Info */}
-                    <div style={{ padding: '1.75rem' }}>
-                      <h2 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.25rem', color: 'var(--white)', marginBottom: '0.6rem', letterSpacing: '0.01em' }}>
+                    <div style={{ padding: '1.5rem' }}>
+                      <h3 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.15rem', color: 'var(--white)', marginBottom: '0.5rem' }}>
                         {project.title}
-                      </h2>
+                      </h3>
                       {project.description && (
-                        <p style={{ fontSize: '0.875rem', color: 'var(--white2)', lineHeight: 1.65, fontWeight: 300, marginBottom: '1.25rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                        <p style={{ fontSize: '0.875rem', color: 'var(--white2)', lineHeight: 1.65, fontWeight: 300, marginBottom: '1rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                           {project.description}
                         </p>
                       )}
-                      <span style={{ fontSize: '0.68rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--teal2)', fontFamily: 'var(--font-archivo)', fontWeight: 500 }}>
+                      <span style={{ fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--teal2)', fontFamily: 'var(--font-archivo)', fontWeight: 600 }}>
                         {tr.viewProject} →
                       </span>
                     </div>
@@ -112,6 +163,22 @@ export default async function ProjectsPage() {
             </div>
           )}
         </section>
+
+        {/* Bottom CTA */}
+        <section style={{ padding: '4rem 1.5rem', background: 'var(--bg2)', borderTop: '1px solid var(--border)', textAlign: 'center' }}>
+          <div style={{ maxWidth: 700, margin: '0 auto' }}>
+            <h2 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', color: 'var(--white)', marginBottom: '1rem' }}>
+              Wil jij ook zulk werk?
+            </h2>
+            <p style={{ color: 'var(--white2)', fontSize: '1rem', lineHeight: 1.8, marginBottom: '1.75rem', fontFamily: 'var(--font-outfit)' }}>
+              Vraag vandaag nog een vrijblijvende offerte aan. Wij reageren binnen 24 uur.
+            </p>
+            <Link href="/offerte-aanvragen" style={{ background: 'var(--teal2)', color: '#1A1A1A', padding: '0.85rem 2.5rem', borderRadius: 4, textDecoration: 'none', fontWeight: 800, fontSize: '1rem', fontFamily: 'var(--font-outfit)' }}>
+              OFFERTE AANVRAGEN
+            </Link>
+          </div>
+        </section>
+
       </main>
       <Footer lang={lang} />
     </>

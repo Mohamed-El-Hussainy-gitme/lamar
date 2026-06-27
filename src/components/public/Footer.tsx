@@ -177,7 +177,20 @@ export default async function Footer({ lang }: { lang: Lang }) {
               T: {get('contact_phone')}
             </div>
             <div>E: {get('contact_email')}</div>
-            <div>{get('contact_hours')}</div>
+            
+            {/* Day-by-day Business Hours */}
+            <div style={{ marginTop: '1.25rem' }}>
+              <div style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, color: 'var(--white)', marginBottom: '0.5rem' }}>Openingstijden:</div>
+              <div style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: '0.25rem', fontSize: '0.85rem' }}>
+                <div>Maandag:</div><div>08:00 - 18:00</div>
+                <div>Dinsdag:</div><div>08:00 - 18:00</div>
+                <div>Woensdag:</div><div>08:00 - 18:00</div>
+                <div>Donderdag:</div><div>08:00 - 18:00</div>
+                <div>Vrijdag:</div><div>08:00 - 18:00</div>
+                <div>Zaterdag:</div><div>08:00 - 18:00</div>
+                <div>Zondag:</div><div style={{ color: 'var(--white3)' }}>Gesloten</div>
+              </div>
+            </div>
           </div>
           <div
             style={{ display: 'flex', gap: '0.75rem', marginTop: '1.75rem' }}

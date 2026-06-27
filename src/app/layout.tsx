@@ -1,21 +1,15 @@
 import type { Metadata, Viewport } from 'next'
-import { Outfit, Playfair_Display } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import './globals.css'
 import FloatingWhatsApp from '@/components/public/FloatingWhatsApp'
 import { getContent } from '@/lib/content'
 import { getTheme } from '@/lib/themeServer'
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, absoluteUrl } from '@/lib/site'
 
-const outfit = Outfit({
+const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-outfit',
-})
-
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800', '900'],
-  variable: '--font-archivo', // Reusing the variable name to minimize changes across components
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-poppins',
 })
 
 export const revalidate = 3600
@@ -57,6 +51,7 @@ export const metadata: Metadata = {
 
 import Preloader from '@/components/public/Preloader'
 import MobileBottomNav from '@/components/public/MobileBottomNav'
+import TopTrustBar from '@/components/public/TopTrustBar'
 
 export default async function RootLayout({
   children,
@@ -64,8 +59,8 @@ export default async function RootLayout({
   const wa = await getContent('whatsapp_number', '31684054528')
   // We can fetch theme, but we will enforce our new elegant palette by default
   const theme = await getTheme()
-  const primaryColor = theme.primary === '#1A1A1A' || theme.primary === '#000000' ? '#1A1C20' : theme.primary;
-  const accentColor = theme.accent === '#FFD935' || theme.accent === '#2ABFA8' ? '#D4AF37' : theme.accent; // Enforce gold if it was yellow or green
+  const primaryColor = '#1A1C20';
+  const accentColor = '#ffd935'; // The Vanibra yellow
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -84,15 +79,18 @@ export default async function RootLayout({
   return (
     <html
       lang="nl"
-      className={`${outfit.variable} ${playfair.variable}`}
+      className={`${poppins.variable}`}
       data-scroll-behavior="smooth"
       style={{
+        '--font-outfit': 'var(--font-poppins)',
+        '--font-archivo': 'var(--font-poppins)',
         '--teal': primaryColor,
         '--teal2': accentColor,
       } as React.CSSProperties}
     >
       <body>
         <Preloader />
+        <TopTrustBar />
         {children}
         <FloatingWhatsApp number={wa} />
         <MobileBottomNav />

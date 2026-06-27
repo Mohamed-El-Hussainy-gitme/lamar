@@ -1,19 +1,25 @@
 import { t, type Lang } from '@/lib/i18n'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
+import { staticProjects } from '@/lib/staticProjects'
 
 export default async function ProjectsSlider({ lang }: { lang: Lang }) {
   const tr = t[lang].projectsPage
   
-  let projects: any[] = []
+  let dbProjects: any[] = []
   try {
-    projects = await prisma.project.findMany({
+    dbProjects = await prisma.project.findMany({
       where: { published: true },
       orderBy: { order: 'asc' },
     })
   } catch (err) {
     // Graceful fallback if DB is unreachable during build
   }
+
+  // Use DB projects if available, fallback to static local images
+  const projects = dbProjects.length > 0
+    ? dbProjects.map(p => ({ id: p.id, slug: p.slug, title: p.title, coverImageUrl: p.coverImageUrl }))
+    : staticProjects.map(p => ({ id: p.id, slug: p.slug, title: p.title, coverImageUrl: p.coverImage }))
 
   if (!projects || projects.length === 0) return null;
 
@@ -110,21 +116,25 @@ export default async function ProjectsSlider({ lang }: { lang: Lang }) {
       </div>
 
       <div className="portfolio-track hide-scrollbar rv d1">
-        {projects.map((item) => (
-          <Link key={item.id} href={`/projects/${item.slug}`} className="portfolio-card">
-            <img src={item.coverImageUrl || 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg'} alt={item.title} loading="lazy" className="portfolio-img" />
-            <div className="portfolio-overlay" />
-            <div className="portfolio-content">
-              <h3 style={{ fontFamily: 'var(--font-playfair, var(--font-archivo))', fontWeight: 700, fontSize: '1.75rem', color: '#FFFFFF', margin: 0, lineHeight: 1.1 }}>
-                {item.title}
-              </h3>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--teal2)', fontSize: '0.85rem', fontWeight: 600, fontFamily: 'var(--font-outfit)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                {tr.viewProject}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        {projects.map((item) => {
+          const href = item.id.startsWith('sp-') ? '/projects' : `/projects/${item.slug}`
+          return (
+            <Link key={item.id} href={href} className="portfolio-card">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={item.coverImageUrl || '/images/Sausklaar-Stucwerk-1.webp'} alt={item.title} loading="lazy" className="portfolio-img" />
+              <div className="portfolio-overlay" />
+              <div className="portfolio-content">
+                <h3 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.75rem', color: '#FFFFFF', margin: 0, lineHeight: 1.1 }}>
+                  {item.title}
+                </h3>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--teal2)', fontSize: '0.85rem', fontWeight: 600, fontFamily: 'var(--font-outfit)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                  {tr.viewProject}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          )
+        })}
       </div>
     </section>
   )

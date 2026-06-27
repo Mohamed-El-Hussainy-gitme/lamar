@@ -423,8 +423,9 @@ export const t: Record<Lang, Translations> = {
       links: [
         { label: 'Home',      href: '/'         },
         { label: 'Over ons',  href: '/over-ons' },
-        { label: 'Infohub',   href: '/infohub'  },
-        { label: 'Projecten', href: '/projects' },
+        { label: 'Diensten',  href: '/#diensten' },
+        { label: 'Projecten', href: '/projecten' },
+        { label: 'Veelgestelde vragen', href: '/faq' },
         { label: 'Contact',   href: '/contact'  },
       ],
       pagesLabel: "Pagina's",

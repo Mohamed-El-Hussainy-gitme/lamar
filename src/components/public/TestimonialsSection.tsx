@@ -6,15 +6,15 @@ interface Testimonial {
   quote: string
   name: string
   location: string
+  daysAgo?: string
 }
 
 const fallbacks: Testimonial[] = [
-  { quote: "Het gipswerk dat ze in onze woonkamer hebben gedaan is werkelijk schitterend. Netjes, nauwkeurig en voor op schema opgeleverd. We zijn ontzettend tevreden met het resultaat.", name: 'Jan de Vries', location: 'Amsterdam' },
-  { quote: 'LAMAR heeft onze hele begane grond getransformeerd. Een professioneel team, uitstekende communicatie van begin tot eind, en het decoratiewerk overtrof alles wat we ons hadden voorgesteld. Van harte aanbevolen.', name: 'Sophie Bakker', location: 'Rotterdam' },
-  { quote: "Ze hebben ons jaren-'60 huis prachtig gerestaureerd — wanden, plafonds, schilderwerk, alles. De aandacht voor detail was opmerkelijk. We schakelen LAMAR zeker weer in voor ons volgende project.", name: 'Mark Timmers', location: 'Utrecht' },
+  { quote: "Topppers!", name: 'Daniel Bos', location: 'Amsterdam', daysAgo: '4 dagen geleden' },
+  { quote: 'Erg tevreden over het stucwerk bij ons in huis. Als wij opnieuw een stukadoor zouden zoeken zouden we zeker weer bij dit..', name: 'Gert-Kees Larooy', location: 'Rotterdam', daysAgo: '1 week geleden' },
+  { quote: 'Meerdere keren bij ons geweest, super service.', name: 'MK', location: 'Utrecht', daysAgo: '1 week geleden' },
+  { quote: 'I worked with them for getting my apartment plastered and painted and they did a great job. Very efficient and great..', name: 'Prerana Sharma', location: 'Den Haag', daysAgo: '2 weken geleden' },
 ]
-
-const AVATAR_COLORS = ['var(--teal)', 'var(--teal)', 'var(--teal)']
 
 function initials(name: string) {
   return name.split(' ').map((w) => w[0]).join('').toUpperCase().slice(0, 2)
@@ -36,58 +36,117 @@ function GoogleG() {
   )
 }
 
+function TrustBadge({ platform, score, reviews, logo }: { platform: string, score: string, reviews: string, logo: string }) {
+  return (
+    <div style={{
+      background: '#f9f9f9',
+      padding: '0.75rem 1.25rem',
+      borderRadius: '8px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '1rem',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
+      minWidth: '220px',
+      border: '1px solid var(--border)'
+    }}>
+      <div style={{ width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', overflow: 'hidden' }}>
+        <img src={logo} alt={platform} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+          <span style={{ fontFamily: 'var(--font-outfit)', fontWeight: 700, fontSize: '0.85rem', color: '#333' }}>{platform}</span>
+          <span style={{ fontFamily: 'var(--font-outfit)', fontSize: '0.7rem', color: '#666', marginLeft: 'auto' }}>{reviews} reviews</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: 2 }}>
+          <span style={{ fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: '1rem', color: '#111' }}>{score}</span>
+          <span style={{ color: 'var(--teal2)', fontSize: '0.9rem', letterSpacing: '1px' }}>★★★★★</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default async function TestimonialsSection({ headingA, headingAccent, headingB, sub }: { lang?: Lang; headingA?: string; headingAccent?: string; headingB?: string; sub?: string }) {
-  const tx = await getSiteText()
-  const content = await getContentMany(['testimonial_1', 'testimonial_2', 'testimonial_3'])
+  const content = await getContentMany(['testimonial_1', 'testimonial_2', 'testimonial_3', 'testimonial_4'])
   const testimonials = [
     parse(content['testimonial_1'], fallbacks[0]),
     parse(content['testimonial_2'], fallbacks[1]),
     parse(content['testimonial_3'], fallbacks[2]),
+    parse(content['testimonial_4'], fallbacks[3]),
   ]
 
+  const AVATAR_COLORS = ['#1e4620', '#7b4012', '#00529b', '#4a6963'];
+
   return (
-    <section id="testimonials" style={{ padding: '8rem 3.5rem', background: 'var(--bg)' }}>
-      <div className="rv" style={{ maxWidth: 1200, margin: '0 auto 4rem' }}>
-        <h2 style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: 'clamp(2rem,3.6vw,3.2rem)', lineHeight: 1.1, letterSpacing: '0.01em', color: 'var(--white)', marginBottom: '1.25rem' }}>
-          {headingA ?? tx('home_testimonials_heading')} <span style={{ color: 'var(--teal2)' }}>{headingAccent ?? tx('home_testimonials_heading_accent')}</span>{headingB ? ` ${headingB}` : ''}
+    <section id="testimonials" style={{ padding: '6rem 1.5rem', background: '#fff' }}>
+      <div className="rv" style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        
+        {/* Top Header */}
+        <h3 style={{ 
+          fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: '1.5rem', 
+          color: '#111', marginBottom: '1.5rem', borderBottom: '3px solid var(--teal2)', 
+          paddingBottom: '0.5rem' 
+        }}>
+          Review
+        </h3>
+
+        {/* Subtitle */}
+        <h2 style={{ 
+          fontFamily: 'var(--font-archivo)', fontWeight: 400, fontSize: 'clamp(1.5rem,2.5vw,2.2rem)', 
+          color: '#333', marginBottom: '3rem', textAlign: 'center'
+        }}>
+          BEST BEOORDEELDE <span style={{ textDecoration: 'underline', textDecorationThickness: '2px', textUnderlineOffset: '6px' }}>STUKADOORS & SCHILDERS</span> VAN NEDERLAND!
         </h2>
-        <p style={{ fontSize: '1.05rem', lineHeight: 1.7, color: 'var(--white2)', fontWeight: 300, maxWidth: 640 }}>{sub ?? tx('home_testimonials_sub')}</p>
-      </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', maxWidth: 1200, margin: '0 auto' }}>
-        {testimonials.map((tm, i) => (
-          <div key={i} className={`tcard rv ${['d1', 'd2', 'd3'][i]}`} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 20, padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', transition: 'border-color 0.3s, transform 0.3s' }}>
-            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.75rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: 0 }}>
-                <span style={{ width: 46, height: 46, borderRadius: '50%', background: AVATAR_COLORS[i], color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.05rem', flexShrink: 0 }}>
-                  {initials(tm.name)}
-                </span>
-                <div style={{ minWidth: 0 }}>
-                  <div style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.1rem', color: 'var(--white)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{tm.name}</div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--white3)', fontWeight: 300 }}>{tm.location}</div>
+        {/* Trust Badges Row */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', marginBottom: '3rem', width: '100%' }}>
+          <TrustBadge platform="Google" score="4.9" reviews="612" logo="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+          <TrustBadge platform="Trustoo" score="4.9" reviews="777" logo="https://trustoo.nl/favicon.ico" />
+          <TrustBadge platform="Werkspot" score="4.7" reviews="247" logo="https://upload.wikimedia.org/wikipedia/commons/e/e3/Werkspot_logo_1.jpg" />
+          <TrustBadge platform="Facebook" score="5.0" reviews="35" logo="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" />
+        </div>
+        
+        {/* Reviews Cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem', width: '100%' }}>
+          {testimonials.map((tm, i) => (
+            <div key={i} className={`tcard rv ${['d1', 'd2', 'd3', 'd4'][i]}`} style={{ 
+              background: '#fff', border: '1px solid var(--border)', borderRadius: '12px', 
+              padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', 
+              boxShadow: '0 4px 12px rgba(0,0,0,0.03)' 
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <span style={{ 
+                    width: 40, height: 40, borderRadius: '50%', background: AVATAR_COLORS[i % AVATAR_COLORS.length], 
+                    color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                    fontFamily: 'var(--font-outfit)', fontWeight: 600, fontSize: '1rem' 
+                  }}>
+                    {initials(tm.name)}
+                  </span>
+                  <div>
+                    <div style={{ fontFamily: 'var(--font-outfit)', fontWeight: 700, fontSize: '0.95rem', color: '#111' }}>{tm.name}</div>
+                    <div style={{ fontSize: '0.75rem', color: '#666' }}>{tm.daysAgo || '1 week geleden'}</div>
+                  </div>
                 </div>
+                <GoogleG />
               </div>
-              <GoogleG />
+
+              <div style={{ color: 'var(--teal2)', fontSize: '1.1rem', letterSpacing: '2px' }}>
+                ★★★★★
+              </div>
+
+              <p style={{ 
+                fontSize: '0.85rem', lineHeight: 1.6, color: '#444', 
+                margin: 0, display: '-webkit-box', WebkitLineClamp: 4, 
+                WebkitBoxOrient: 'vertical', overflow: 'hidden' 
+              }}>
+                {tm.quote}
+              </p>
+
+              <span style={{ fontSize: '0.8rem', color: '#888', marginTop: 'auto', cursor: 'pointer' }}>Lees verder</span>
             </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <span style={{ display: 'inline-flex', gap: 1 }}>
-                {[...Array(5)].map((_, s) => (
-                  <span key={s} style={{ color: '#FBBC04', fontSize: '0.95rem' }}>★</span>
-                ))}
-              </span>
-              <span style={{ width: 15, height: 15, borderRadius: '50%', background: '#4285F4', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              </span>
-            </div>
-
-            <p style={{ fontSize: '0.9rem', lineHeight: 1.7, color: 'var(--white2)', fontWeight: 300, margin: 0, display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-              {tm.quote}
-            </p>
-
-            <span style={{ fontSize: '0.82rem', color: 'var(--white3)', fontWeight: 400, marginTop: 'auto' }}>Lees verder</span>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   )
