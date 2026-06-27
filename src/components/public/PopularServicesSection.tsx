@@ -62,10 +62,7 @@ export default async function PopularServicesSection({ lang }: { lang: Lang }) {
 
               {/* Bottom Button */}
               <div style={{ position: 'absolute', bottom: '2rem', zIndex: 2, width: '100%', display: 'flex', justifyContent: 'center' }}>
-                <Link href={svc.href} style={{ background: 'rgba(0,0,0,0.6)', border: '2px solid rgba(255,255,255,0.3)', color: '#FFFFFF', padding: '0.8rem 2rem', fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: '0.9rem', letterSpacing: '0.05em', textDecoration: 'none', transition: 'background 0.3s', backdropFilter: 'blur(4px)' }}
-                  onMouseEnter={(e) => e.currentTarget.style.background = 'var(--teal2)'}
-                  onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.6)'}
-                >
+                <Link href={svc.href} className="pop-svc-btn" style={{ background: 'rgba(0,0,0,0.6)', border: '2px solid rgba(255,255,255,0.3)', color: '#FFFFFF', padding: '0.8rem 2rem', fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: '0.9rem', letterSpacing: '0.05em', textDecoration: 'none', transition: 'background 0.3s', backdropFilter: 'blur(4px)' }}>
                   MEER LEZEN
                 </Link>
               </div>
@@ -73,6 +70,11 @@ export default async function PopularServicesSection({ lang }: { lang: Lang }) {
           ))}
         </div>
       </div>
+      <style>{`
+        .pop-svc-btn:hover {
+          background: var(--teal2) !important;
+        }
+      `}</style>
     </section>
   )
 }
