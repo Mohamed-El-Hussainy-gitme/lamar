@@ -56,6 +56,7 @@ export const metadata: Metadata = {
 }
 
 import Preloader from '@/components/public/Preloader'
+import MobileBottomNav from '@/components/public/MobileBottomNav'
 
 export default async function RootLayout({
   children,
@@ -94,6 +95,7 @@ export default async function RootLayout({
         <Preloader />
         {children}
         <FloatingWhatsApp number={wa} />
+        <MobileBottomNav />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -112,19 +112,19 @@ export default async function ReviewBadges() {
   }
 
   return (
-    <section style={{ background: 'var(--bg)', padding: '2.5rem 1.5rem' }}>
+    <section style={{ background: 'transparent', padding: '2.5rem 1.5rem', position: 'relative', zIndex: 10 }}>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', maxWidth: 1000, margin: '0 auto' }}>
         {visible.map((b) => {
           const hasUrl = typeof b.url === 'string' && b.url.trim() !== ''
           const inner = (
             <>
               <Logo platform={b.platform} />
-              <span style={{ fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: '1.5rem', color: 'var(--white)', lineHeight: 1.1 }}>
+              <span style={{ fontFamily: 'var(--font-archivo)', fontWeight: 800, fontSize: '1.75rem', color: '#1A1A1A', lineHeight: 1.1, marginTop: '0.5rem' }}>
                 {b.rating}
               </span>
               <Stars />
               {b.reviews.trim() !== '' && (
-                <span style={{ fontSize: '0.72rem', color: 'var(--white3)', fontWeight: 400 }}>
+                <span style={{ fontSize: '0.8rem', color: '#4A4A4A', fontWeight: 600, marginTop: '0.2rem' }}>
                   {b.reviews} reviews
                 </span>
               )}
