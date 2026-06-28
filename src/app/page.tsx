@@ -4,7 +4,6 @@ import TestimonialsSection from '@/components/public/TestimonialsSection';
 import ServiceGroupSection, { ServiceItem } from '@/components/public/ServiceGroupSection';
 import ProjectsSlider from '@/components/public/ProjectsSlider';
 import HomeContactForm from '@/components/public/HomeContactForm';
-import TrustIconsBar from '@/components/public/TrustIconsBar';
 import Footer from '@/components/public/Footer';
 import RevealObserver from '@/components/public/RevealObserver';
 import FAQSection from '@/components/public/FAQSection';
@@ -60,9 +59,6 @@ export default async function Home() {
 
         {/* Offerte aanvraag Form */}
         <HomeContactForm />
-
-        {/* 3 Trust Icons Bar */}
-        <TrustIconsBar />
       </main>
       <Footer lang={lang} />
       <RevealObserver />
