@@ -7,6 +7,7 @@ import HomeContactForm from '@/components/public/HomeContactForm';
 import TrustIconsBar from '@/components/public/TrustIconsBar';
 import Footer from '@/components/public/Footer';
 import RevealObserver from '@/components/public/RevealObserver';
+import FAQSection from '@/components/public/FAQSection';
 import { getSiteText } from '@/lib/siteText';
 
 export const revalidate = 3600;
@@ -54,6 +55,9 @@ export default async function Home() {
 
         {/* Review Bar Mكرر */}
         <TestimonialsSection lang={lang} />
+
+        {/* FAQ Accordion */}
+        <FAQSection lang={lang} />
 
         {/* Offerte aanvraag Form */}
         <HomeContactForm />

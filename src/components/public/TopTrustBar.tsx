@@ -2,7 +2,7 @@ import { getSiteText } from '@/lib/siteText';
 
 export default async function TopTrustBar() {
   return (
-    <div style={{ background: '#3b3b3b', padding: '0.6rem 1rem', display: 'flex', justifyContent: 'center', alignItems: 'center', borderBottom: 'none' }}>
+    <div id="top-trust-bar" style={{ background: '#3b3b3b', padding: '0.6rem 1rem', display: 'flex', justifyContent: 'center', alignItems: 'center', borderBottom: 'none' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap', justifyContent: 'center', width: '100%', maxWidth: 1200, position: 'relative' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
           <span style={{ color: '#fff', fontSize: '1rem', fontWeight: 700 }}>✓</span>

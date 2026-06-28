@@ -52,8 +52,10 @@ section, footer, nav {
   /* Hero: two-col stacked */
   #hero                            { padding: calc(75px + 1.5rem) 1.25rem 2.5rem !important; }
   #hero .hero-grid                 { grid-template-columns: 1fr !important; gap: 2rem !important; }
-  #hero > div:last-child           { position: static !important; bottom: auto !important; margin-top: 2rem !important; }
-  #hero > div:last-child > div     { width: calc(50% - 0.5rem) !important; min-width: 0 !important; }
+
+  /* Top trust bar: one line only (rating + language), hide the other two claims */
+  #top-trust-bar > div > div:nth-child(1),
+  #top-trust-bar > div > div:nth-child(3)  { display: none !important; }
 
   /* Services: 1-col */
   #services                        { padding: 4rem 1.25rem !important; }
