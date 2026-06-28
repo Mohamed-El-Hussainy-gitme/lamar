@@ -30,7 +30,7 @@ export default function HomeContactForm() {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '4rem', alignItems: 'flex-start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '4rem', alignItems: 'center' }}>
           
           {/* Left: Form */}
           <div style={{ position: 'relative' }}>
@@ -91,50 +91,86 @@ export default function HomeContactForm() {
             </div>
           </div>
 
-          {/* Right: Features */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem', justifyContent: 'center', padding: '2rem 0' }}>
-            
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1rem' }}>
-              <div style={{ width: 80, height: 80 }}>
-                {/* Clock icon SVG */}
-                <svg viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polyline points="12 6 12 12 16 14"></polyline>
-                  <path d="M16 2l4 4-4 4"></path>
-                  <path d="M20 6H10"></path>
+          {/* Right: Features — illustrated icons like vanibra.nl */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem', justifyContent: 'center', padding: '1rem 0' }}>
+
+            {/* Feature 1: Fast / No waiting */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1.25rem' }}>
+              <div style={{ width: 110, height: 80 }}>
+                {/* Clock with speed motion lines */}
+                <svg viewBox="0 0 110 80" fill="none" stroke="#1a1a1a" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
+                  {/* Three speed lines on the left */}
+                  <path d="M4 24 L16 24 Q22 24 22 30" />
+                  <line x1="2" y1="40" x2="22" y2="40" />
+                  <path d="M4 56 L16 56 Q22 56 22 50" />
+                  {/* Clock outer circle */}
+                  <circle cx="70" cy="40" r="32" />
+                  {/* Clock inner ring (subtle) */}
+                  <circle cx="70" cy="40" r="2.5" fill="#1a1a1a" stroke="none" />
+                  {/* Hour ticks */}
+                  <line x1="70" y1="10" x2="70" y2="16" />
+                  <line x1="70" y1="64" x2="70" y2="70" />
+                  <line x1="40" y1="40" x2="46" y2="40" />
+                  <line x1="94" y1="40" x2="100" y2="40" />
+                  {/* Clock hands */}
+                  <line x1="70" y1="40" x2="70" y2="22" strokeWidth="2.8" />
+                  <line x1="70" y1="40" x2="84" y2="47" strokeWidth="2.3" />
                 </svg>
               </div>
-              <p style={{ fontFamily: 'var(--font-outfit)', fontSize: '1.1rem', color: '#444', margin: 0 }}>
+              <p style={{ fontFamily: 'var(--font-outfit)', fontSize: '1.05rem', color: '#333', margin: 0, lineHeight: 1.5 }}>
                 Snel en efficiënt, <strong style={{ color: '#111' }}>ZONDER wachttijden!</strong>
               </p>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1rem' }}>
-              <div style={{ width: 80, height: 80 }}>
-                {/* House/Tools icon SVG */}
-                <svg viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
-                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                  <path d="M22 9h-4l-3-3"></path>
-                  <line x1="2" y1="22" x2="22" y2="22"></line>
+            {/* Feature 2: Big and small jobs */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1.25rem' }}>
+              <div style={{ width: 100, height: 90 }}>
+                {/* House with scale arrows */}
+                <svg viewBox="0 0 110 105" fill="none" stroke="#1a1a1a" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
+                  {/* Roof */}
+                  <polyline points="8 52 54 12 100 52" />
+                  {/* Chimney */}
+                  <rect x="68" y="26" width="11" height="22" />
+                  {/* House walls */}
+                  <rect x="18" y="52" width="72" height="46" />
+                  {/* Door */}
+                  <path d="M42 98 L42 68 Q42 63 48 63 L62 63 Q68 63 68 68 L68 98" />
+                  {/* Horizontal double-headed arrow at bottom */}
+                  <line x1="2" y1="104" x2="108" y2="104" />
+                  <polyline points="8 100 2 104 8 108" />
+                  <polyline points="102 100 108 104 102 108" />
+                  {/* Vertical arrow on right side */}
+                  <line x1="108" y1="12" x2="108" y2="98" />
+                  <polyline points="104 18 108 12 112 18" />
+                  <line x1="104" y1="98" x2="112" y2="98" />
                 </svg>
               </div>
-              <p style={{ fontFamily: 'var(--font-outfit)', fontSize: '1.1rem', color: '#444', margin: 0 }}>
+              <p style={{ fontFamily: 'var(--font-outfit)', fontSize: '1.05rem', color: '#333', margin: 0, lineHeight: 1.5 }}>
                 Zowel grote, als <strong style={{ color: '#111' }}>kleine klussen.</strong>
               </p>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1rem' }}>
-              <div style={{ width: 80, height: 80 }}>
-                {/* Support/Service icon SVG */}
-                <svg viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
-                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                  <path d="M12 8v4"></path>
-                  <path d="M12 16h.01"></path>
+            {/* Feature 3: 1-on-1 guidance */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1.25rem' }}>
+              <div style={{ width: 100, height: 90 }}>
+                {/* Person with circular arrows and chat bubble */}
+                <svg viewBox="0 0 100 95" fill="none" stroke="#1a1a1a" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
+                  {/* Chat bubble top-right */}
+                  <path d="M58 5 L88 5 Q93 5 93 10 L93 26 Q93 31 88 31 L76 31 L70 38 L70 31 L58 31 Q53 31 53 26 L53 10 Q53 5 58 5 Z" />
+                  {/* Person head */}
+                  <circle cx="36" cy="45" r="13" />
+                  {/* Person body/shoulders */}
+                  <path d="M14 88 Q14 66 36 66 Q58 66 58 88" />
+                  {/* Left circular arrow arc */}
+                  <path d="M10 50 A28 28 0 0 1 36 22" />
+                  <polyline points="6 43 10 50 17 46" />
+                  {/* Right circular arrow arc */}
+                  <path d="M62 50 A28 28 0 0 0 36 22" />
+                  <polyline points="66 43 62 50 55 46" />
                 </svg>
               </div>
-              <p style={{ fontFamily: 'var(--font-outfit)', fontSize: '1.1rem', color: '#444', margin: 0 }}>
-                <strong style={{ color: '#111' }}>Uitstekende service</strong> en garantie.
+              <p style={{ fontFamily: 'var(--font-outfit)', fontSize: '1.05rem', color: '#333', margin: 0, lineHeight: 1.5 }}>
+                1 op 1 begeleiding <strong style={{ color: '#111' }}>gedurende het hele traject.</strong>
               </p>
             </div>
 
