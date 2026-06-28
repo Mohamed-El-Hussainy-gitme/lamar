@@ -1,7 +1,6 @@
 import { getContentMany } from '@/lib/content'
 import { type Lang } from '@/lib/i18n'
 import { getSiteText } from '@/lib/siteText'
-import ReviewBadges from '@/components/public/ReviewBadges'
 
 interface Testimonial {
   quote: string
@@ -69,8 +68,7 @@ export default async function TestimonialsSection({ headingA, headingAccent, hea
           BEST BEOORDEELDE <span style={{ textDecoration: 'underline', textDecorationThickness: '2px', textUnderlineOffset: '6px' }}>STUKADOORS & SCHILDERS</span> VAN NEDERLAND!
         </h2>
 
-        {/* Trust Badges Row (managed via /admin/reviews-bar) */}
-        <ReviewBadges />
+        {/* Trust Badges Row now shown once, in HeroSection (managed via /admin/reviews-bar) */}
         
         {/* Reviews Cards */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem', width: '100%' }}>
