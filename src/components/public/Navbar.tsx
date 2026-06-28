@@ -151,7 +151,7 @@ export default function Navbar({ lang }: { lang: Lang }) {
 
         {/* Right: CTA */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '1rem' }}>
-          <Link href="/offerte-aanvragen" className="hidden md:inline-block"
+          <Link href="/#offerte" className="inline-block"
             style={{ 
               background: 'var(--teal2)', 
               color: '#1A1A1A', 
@@ -203,7 +203,7 @@ export default function Navbar({ lang }: { lang: Lang }) {
               >{item.label}</Link>
             );
           })}
-          <Link href="/offerte-aanvragen" onClick={closeMenu}
+          <Link href="/#offerte" onClick={closeMenu}
             style={{ 
               background: 'var(--teal2)', color: '#1A1A1A', 
               padding: '0.9rem 2.5rem', borderRadius: 4, 

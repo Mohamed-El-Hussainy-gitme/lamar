@@ -33,8 +33,8 @@ export default async function Home() {
       <main>
         <HeroSection lang={lang} />
         
-        {/* Real Review Bar (Using Testimonials) */}
-        <TestimonialsSection lang={lang} />
+        {/* Real Review Bar (Using Testimonials) — معطّلة مؤقتاً، يمكن للمالك تفعيلها */}
+        {/* <TestimonialsSection lang={lang} /> */}
 
         {/* Service Section 1 */}
         <ServiceGroupSection 
@@ -53,8 +53,7 @@ export default async function Home() {
         {/* Portfolio Section */}
         <ProjectsSlider lang={lang} />
 
-        {/* Review Bar Mكرر */}
-        <TestimonialsSection lang={lang} />
+        {/* Review Bar — تم حذف النسخة المكررة */}
 
         {/* FAQ Accordion */}
         <FAQSection lang={lang} />
