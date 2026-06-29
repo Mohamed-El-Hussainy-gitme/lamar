@@ -7,18 +7,12 @@ import { t, type Lang } from '@/lib/i18n';
 
 export default function Navbar({ lang }: { lang: Lang }) {
   const tr = t[lang].nav;
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname() || '/';
   const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href + '/'));
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -30,7 +24,7 @@ export default function Navbar({ lang }: { lang: Lang }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const closeMenu = () => { setMenuOpen(false); document.body.style.overflow = ''; };
+  const closeMenu = () => { setMenuOpen(false); setMobileServicesOpen(false); document.body.style.overflow = ''; };
   const toggleMenu = () => { const next = !menuOpen; setMenuOpen(next); document.body.style.overflow = next ? 'hidden' : ''; };
 
   const services = [
@@ -51,19 +45,27 @@ export default function Navbar({ lang }: { lang: Lang }) {
     { label: 'CONTACT', href: '/contact' },
   ];
 
+  /* ── glassmorphism nav style ── */
+  const navStyle: React.CSSProperties = {
+    position: 'sticky',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 200,
+    padding: '1rem 3.5rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    background: 'rgba(255,255,255,0.85)',
+    backdropFilter: 'blur(16px)',
+    WebkitBackdropFilter: 'blur(16px)',
+    borderBottom: '1px solid rgba(255,255,255,0.4)',
+    boxShadow: '0 2px 24px rgba(0,0,0,0.07)',
+  };
+
   return (
     <>
-      <nav
-        style={{
-          position: 'sticky', top: 0, zIndex: 200,
-          padding: '1rem 3.5rem',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          background: '#ffffff',
-          borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
-          boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.05)' : 'none',
-          transition: 'all 0.3s',
-        }}
-      >
+      <nav style={navStyle}>
         {/* Left: logo */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
@@ -124,7 +126,7 @@ export default function Navbar({ lang }: { lang: Lang }) {
                     </button>
                   </div>
                   {servicesOpen && (
-                    <div style={{ position: 'absolute', top: '100%', left: '50%', transform: 'translateX(-50%)', marginTop: '1rem', background: '#fff', borderRadius: '4px', padding: '0.5rem', minWidth: '200px', boxShadow: '0 10px 40px rgba(0,0,0,0.1)', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <div style={{ position: 'absolute', top: '100%', left: '50%', transform: 'translateX(-50%)', marginTop: '1rem', background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderRadius: '4px', padding: '0.5rem', minWidth: '200px', boxShadow: '0 10px 40px rgba(0,0,0,0.1)', border: '1px solid rgba(255,255,255,0.4)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
                       {item.dropdown.map(subItem => (
                         <Link key={subItem.href} href={subItem.href} onClick={() => setServicesOpen(false)} style={{ textDecoration: 'none', fontSize: '0.85rem', color: 'var(--white2)', padding: '0.75rem 1rem', borderRadius: '4px', transition: 'background 0.2s, color 0.2s', fontWeight: 500 }} onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--bg2)'; e.currentTarget.style.color = 'var(--teal2)'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--white2)'; }}>
                           {subItem.label}
@@ -178,39 +180,180 @@ export default function Navbar({ lang }: { lang: Lang }) {
         </div>
       </nav>
 
+      {/* ── Mobile menu overlay ── */}
       {menuOpen && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 199, background: '#ffffff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', overflowY: 'auto', padding: '2rem 0' }}>
-          {desktopLinks.map((item) => {
-            if (item.dropdown) {
-              return (
-                <div key={item.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', width: '100%' }}>
-                  <div style={{ fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.5rem', color: 'var(--white2)' }}>{item.label}</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
-                    {item.dropdown.map(subItem => (
-                      <Link key={subItem.href} href={subItem.href} onClick={closeMenu} style={{ textDecoration: 'none', fontFamily: 'var(--font-outfit)', fontSize: '1.1rem', color: 'var(--white2)', opacity: 0.8 }}>
-                        {subItem.label}
+        <div style={{
+          position: 'fixed', inset: 0, zIndex: 199,
+          background: '#ffffff',
+          display: 'flex', flexDirection: 'column',
+          overflowY: 'auto',
+          paddingTop: '5rem',
+        }}>
+          {/* Active page label */}
+          <div style={{ padding: '0.5rem 1.5rem 0.25rem', borderBottom: '1px solid var(--border)' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--teal2)', fontFamily: 'var(--font-outfit)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+              {desktopLinks.find(l => isActive(l.href))?.label || 'HOME'}
+            </span>
+          </div>
+
+          {/* Nav items */}
+          <nav style={{ flex: 1 }}>
+            {desktopLinks.map((item) => {
+              if (item.dropdown) {
+                return (
+                  <div key={item.label} style={{ borderBottom: '1px solid var(--border)' }}>
+                    {/* Row: link to page + chevron toggle */}
+                    <div style={{ display: 'flex', alignItems: 'stretch' }}>
+                      {/* Link → goes to /onze-diensten */}
+                      <Link
+                        href={item.href}
+                        onClick={closeMenu}
+                        style={{
+                          flex: 1,
+                          display: 'flex',
+                          alignItems: 'center',
+                          padding: '1.1rem 1.5rem',
+                          textDecoration: 'none',
+                          fontFamily: 'var(--font-archivo)',
+                          fontWeight: 700,
+                          fontSize: '1.15rem',
+                          color: isActive(item.href) ? 'var(--teal2)' : 'var(--white2)',
+                        }}
+                      >
+                        {item.label}
                       </Link>
-                    ))}
+                      {/* Chevron button → toggles submenu only */}
+                      <button
+                        onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                        aria-label="Diensten submenu toggle"
+                        style={{
+                          background: mobileServicesOpen ? 'rgba(255,217,53,0.12)' : 'transparent',
+                          border: 'none',
+                          borderLeft: '1px solid var(--border)',
+                          padding: '0 1.25rem',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'background 0.2s',
+                        }}
+                      >
+                        <svg
+                          width="14" height="8" viewBox="0 0 14 8" fill="none"
+                          style={{ transform: mobileServicesOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.25s', flexShrink: 0 }}
+                        >
+                          <path d="M1 1L7 7L13 1" stroke={mobileServicesOpen ? 'var(--teal2)' : 'var(--white2)'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </button>
+                    </div>
+
+                    {/* Dropdown sub-items */}
+                    {mobileServicesOpen && (
+                      <div style={{ background: '#fafafa', borderTop: '1px solid var(--border)' }}>
+                        {/* "Alle diensten" shortcut link */}
+                        <Link
+                          href={item.href}
+                          onClick={closeMenu}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            padding: '0.9rem 1.5rem 0.9rem 2rem',
+                            textDecoration: 'none',
+                            fontFamily: 'var(--font-outfit)',
+                            fontWeight: 700,
+                            fontSize: '0.85rem',
+                            color: 'var(--teal2)',
+                            borderBottom: '1px solid var(--border)',
+                            letterSpacing: '0.05em',
+                            textTransform: 'uppercase',
+                          }}
+                        >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                            <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+                          </svg>
+                          Alle diensten
+                        </Link>
+                        {item.dropdown.map((subItem, i) => {
+                          const subActive = isActive(subItem.href);
+                          return (
+                            <Link
+                              key={subItem.href}
+                              href={subItem.href}
+                              onClick={closeMenu}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.75rem',
+                                padding: '1rem 1.5rem 1rem 2rem',
+                                textDecoration: 'none',
+                                fontFamily: 'var(--font-outfit)',
+                                fontSize: '1rem',
+                                fontWeight: subActive ? 700 : 500,
+                                color: subActive ? 'var(--teal2)' : '#333',
+                                borderBottom: i < item.dropdown!.length - 1 ? '1px solid var(--border)' : 'none',
+                                background: subActive ? 'rgba(255,217,53,0.08)' : 'transparent',
+                              }}
+                            >
+                              <span style={{
+                                display: 'block',
+                                width: 6,
+                                height: 6,
+                                borderRadius: '50%',
+                                background: subActive ? 'var(--teal2)' : '#ccc',
+                                flexShrink: 0,
+                              }} />
+                              {subItem.label}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
-                </div>
+                );
+              }
+
+              const active = isActive(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={closeMenu}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '1.1rem 1.5rem',
+                    textDecoration: 'none',
+                    fontFamily: 'var(--font-archivo)',
+                    fontWeight: 700,
+                    fontSize: '1.15rem',
+                    color: active ? 'var(--teal2)' : 'var(--white2)',
+                    borderBottom: '1px solid var(--border)',
+                    transition: 'color 0.2s',
+                  }}
+                >
+                  {item.label}
+                  {/* small line decoration */}
+                  <span style={{ display: 'block', width: 40, height: 1.5, background: 'var(--border2)' }} />
+                </Link>
               );
-            }
-            
-            const active = isActive(item.href);
-            return (
-              <Link key={item.href} href={item.href} onClick={closeMenu}
-                style={{ textDecoration: 'none', fontFamily: 'var(--font-archivo)', fontWeight: 700, fontSize: '1.5rem', letterSpacing: '0.04em', color: active ? 'var(--teal2)' : 'var(--white2)', transition: 'color 0.2s' }}
-              >{item.label}</Link>
-            );
-          })}
-          <Link href="/#offerte" onClick={closeMenu}
-            style={{ 
-              background: 'var(--teal2)', color: '#1A1A1A', 
-              padding: '0.9rem 2.5rem', borderRadius: 4, 
-              textDecoration: 'none', fontFamily: 'var(--font-outfit)', 
-              fontWeight: 800, fontSize: '1rem', marginTop: '0.75rem' 
-            }}
-          >OFFERTE AANVRAAG</Link>
+            })}
+
+            {/* CTA button */}
+            <div style={{ padding: '1.5rem' }}>
+              <Link href="/#offerte" onClick={closeMenu}
+                style={{ 
+                  display: 'block',
+                  background: 'var(--teal2)', color: '#1A1A1A', 
+                  padding: '1rem 2.5rem', borderRadius: 4, 
+                  textDecoration: 'none', fontFamily: 'var(--font-outfit)', 
+                  fontWeight: 800, fontSize: '1rem', textAlign: 'center',
+                }}
+              >OFFERTE AANVRAAG</Link>
+            </div>
+          </nav>
         </div>
       )}
     </>

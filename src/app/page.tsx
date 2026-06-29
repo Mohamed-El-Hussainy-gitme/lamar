@@ -3,6 +3,7 @@ import HeroSection from '@/components/public/HeroSection';
 import TestimonialsSection from '@/components/public/TestimonialsSection';
 import ServiceGroupSection, { ServiceItem } from '@/components/public/ServiceGroupSection';
 import ProjectsSlider from '@/components/public/ProjectsSlider';
+import WhyChooseUsSection from '@/components/public/WhyChooseUsSection';
 import HomeContactForm from '@/components/public/HomeContactForm';
 import Footer from '@/components/public/Footer';
 import RevealObserver from '@/components/public/RevealObserver';
@@ -53,6 +54,9 @@ export default async function Home() {
         <ProjectsSlider lang={lang} />
 
         {/* Review Bar — تم حذف النسخة المكررة */}
+
+        {/* Why Choose Us — after portfolio */}
+        <WhyChooseUsSection />
 
         {/* FAQ Accordion */}
         <FAQSection lang={lang} />

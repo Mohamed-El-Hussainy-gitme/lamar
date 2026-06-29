@@ -53,9 +53,7 @@ section, footer, nav {
   #hero                            { padding: calc(75px + 1.5rem) 1.25rem 2.5rem !important; }
   #hero .hero-grid                 { grid-template-columns: 1fr !important; gap: 2rem !important; }
 
-  /* Top trust bar: one line only (rating + language), hide the other two claims */
-  #top-trust-bar > div > div:nth-child(1),
-  #top-trust-bar > div > div:nth-child(3)  { display: none !important; }
+  /* (trust bar rotation handled by JS — no CSS needed) */
 
   /* Services: 1-col */
   #services                        { padding: 4rem 1.25rem !important; }
@@ -96,6 +94,17 @@ section, footer, nav {
   footer                           { padding: 2.5rem 1.25rem 1.5rem !important; }
   .site-footer-grid                { grid-template-columns: 1fr !important; gap: 2rem !important; }
   .wa-float                        { bottom: 16px !important; right: 16px !important; width: 52px !important; height: 52px !important; }
+
+  /* HomeContactForm: hide features column on mobile (like vanibra.nl) */
+  #offerte > div > div > div:last-child { display: none !important; }
+  /* HomeContactForm: full width form on mobile */
+  #offerte > div > div  { grid-template-columns: 1fr !important; }
+
+  /* WhyChooseUs: 1-col on mobile */
+  .wcu-grid                        { grid-template-columns: 1fr !important; }
+
+  /* Hero: correct top padding for sticky navbar on mobile */
+  #hero                            { padding-top: 4rem !important; padding-bottom: 6rem !important; }
 }
 
 @media (max-width: 1023px) {
